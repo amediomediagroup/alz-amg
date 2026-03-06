@@ -32,7 +32,7 @@ module "management_resources" {
 module "management_groups" {
   # <https://registry.terraform.io/modules/Azure/avm-ptn-alz/azurerm/latest>
   source  = "Azure/avm-ptn-alz/azurerm"
-  version = "0.12.3"
+  version = "0.19.0"
 
   architecture_name  = "alz"
   location           = var.location
@@ -49,7 +49,7 @@ module "management_groups" {
   }
 
   policy_assignments_to_modify = {
-    "alz" = {
+    "amg-alz" = {
       "policy_assignments" = {
         "Deploy-MDFC-Config-H224" = {
           "parameters" = {
@@ -72,21 +72,21 @@ module "management_groups" {
         }
       }
     }
-    "connectivity" = {
+    "amg-connectivity" = {
       "policy_assignments" = {
         "Enable-DDoS-VNET" = {
           "enforcement_mode" = "DoNotEnforce"
         }
       }
     }
-    "corp" = {
+    "amg-corp" = {
       "policy_assignments" = {
         "Deploy-Private-DNS-Zones" = {
           "enforcement_mode" = "DoNotEnforce"
         }
       }
     }
-    "landingzones" = {
+    "amg-landingzones" = {
       "policy_assignments" = {
         "Enable-DDoS-VNET" = {
           "enforcement_mode" = "DoNotEnforce"
@@ -107,15 +107,15 @@ module "management_groups" {
   subscription_placement = {
     "connectivity" = {
       "management_group_name" = "connectivity"
-      "subscription_id"       = var.subscription_id_connectivity
+      "subscription_id"       = var.subscription_ids["connectivity"]
     }
     "identity" = {
       "management_group_name" = "identity"
-      "subscription_id"       = var.subscription_id_identity
+      "subscription_id"       = var.subscription_ids["identity"]
     }
     "management" = {
       "management_group_name" = "management"
-      "subscription_id"       = var.subscription_id_management
+      "subscription_id"       = var.subscription_ids["management"]
     }
   }
 }
