@@ -76,6 +76,7 @@ provider "azapi" {
 }
 
 provider "alz" {
+  library_overwrite_enabled = true
   library_references = [
     {
       path = "platform/alz"
