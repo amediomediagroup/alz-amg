@@ -58,13 +58,13 @@ module "management_groups" {
   #   retries            = local.default_retries
   #   timeouts           = local.default_timeouts
 
-  dependencies = {
-    policy_assignments = [
-      module.management_resources.data_collection_rule_ids,
-      module.management_resources.resource_id,
-      module.management_resources.user_assigned_identity_ids,
-    ]
-  }
+  # dependencies = {
+  #   policy_assignments = [
+  #     module.management_resources.data_collection_rule_ids,
+  #     module.management_resources.resource_id,
+  #     module.management_resources.user_assigned_identity_ids,
+  #   ]
+  # }
 
   policy_assignments_to_modify = {
     "alz" = {
