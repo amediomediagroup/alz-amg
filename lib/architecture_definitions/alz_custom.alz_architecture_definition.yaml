@@ -1,0 +1,68 @@
+"management_groups":
+- "archetypes":
+  - "root_custom"
+  "display_name": "Azure Landing Zones"
+  "exists": true
+  "id": "amg-alz"
+  "parent_id": null
+- "archetypes":
+  - "platform_custom"
+  "display_name": "Platform"
+  "exists": false
+  "id": "amg-platform"
+  "parent_id": "amg-alz"
+- "archetypes":
+  - "landing_zones_custom"
+  "display_name": "Landing Zones"
+  "exists": false
+  "id": "amg-landingzones"
+  "parent_id": "amg-alz"
+- "archetypes":
+  - "corp_custom"
+  "display_name": "Corp"
+  "exists": false
+  "id": "amg-corp"
+  "parent_id": "amg-landingzones"
+- "archetypes":
+  - "online_custom"
+  "display_name": "Online"
+  "exists": false
+  "id": "amg-online"
+  "parent_id": "amg-landingzones"
+- "archetypes":
+  - "sandbox_custom"
+  "display_name": "Sandbox"
+  "exists": false
+  "id": "amg-sandbox"
+  "parent_id": "amg-alz"
+- "archetypes":
+  - "security_custom"
+  "display_name": "Security"
+  "exists": false
+  "id": "amg-security"
+  "parent_id": "amg-platform"
+- "archetypes":
+  - "management_custom"
+  "display_name": "Management"
+  "exists": false
+  "id": "amg-management"
+  "parent_id": "amg-platform"
+- "archetypes":
+  - "connectivity_custom"
+  "display_name": "Connectivity"
+  "exists": false
+  "id": "amg-connectivity"
+  "parent_id": "amg-platform"
+- "archetypes":
+  - "identity_custom"
+  "display_name": "Identity"
+  "exists": false
+  "id": "amg-identity"
+  "parent_id": "amg-platform"
+- "archetypes":
+  - "decommissioned_custom"
+  "display_name": "Decommissioned"
+  "exists": false
+  "id": "amg-decommissioned"
+  "parent_id": "amg-alz"
+"name": "alz_custom"
