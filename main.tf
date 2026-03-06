@@ -1,5 +1,23 @@
 data "azapi_client_config" "current" {}
 
+locals {
+  management_resource_group_name          = "rg-management-${var.location}"
+  management_resource_group_id            = "/subscriptions/${var.subscription_ids["management"]}/resourcegroups/${local.management_resource_group_name}"
+  automation_account_name                 = "aa-management-${var.location}"
+  log_analytics_workspace_name            = "law-management-${var.location}"
+  ama_user_assigned_managed_identity_name = "uami-management-ama-${var.location}"
+  dcr_change_tracking_name                = "dcr-change-tracking"
+  dcr_defender_sql_name                   = "dcr-defender-sql"
+  dcr_vm_insights_name                    = "dcr-vm-insights"
+
+  ama_user_assigned_managed_identity_id       = "${local.management_resource_group_id}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/${local.ama_user_assigned_managed_identity_name}"
+  ama_change_tracking_data_collection_rule_id = "${local.management_resource_group_id}/providers/Microsoft.Insights/dataCollectionRules/${local.dcr_change_tracking_name}"
+  ama_mdfc_sql_data_collection_rule_id        = "${local.management_resource_group_id}/providers/Microsoft.Insights/dataCollectionRules/${local.dcr_defender_sql_name}"
+  ama_vm_insights_data_collection_rule_id     = "${local.management_resource_group_id}/providers/Microsoft.Insights/dataCollectionRules/${local.dcr_vm_insights_name}"
+  log_analytics_workspace_id                  = "${local.management_resource_group_id}/providers/Microsoft.OperationalInsights/workspaces/${local.log_analytics_workspace_name}"
+
+}
+
 module "management_resources" {
   # <https://registry.terraform.io/modules/Azure/avm-ptn-alz-management/azurerm/latest>
   source  = "Azure/avm-ptn-alz-management/azurerm"
@@ -32,13 +50,13 @@ module "management_resources" {
 module "management_groups" {
   # <https://registry.terraform.io/modules/Azure/avm-ptn-alz/azurerm/latest>
   source  = "Azure/avm-ptn-alz/azurerm"
-  version = "0.19.0"
+  version = "0.20.2"
 
   architecture_name  = "alz"
   location           = var.location
   parent_resource_id = data.azapi_client_config.current.tenant_id # Tenant root group
-  retries            = local.default_retries
-  timeouts           = local.default_timeouts
+  #   retries            = local.default_retries
+  #   timeouts           = local.default_timeouts
 
   dependencies = {
     policy_assignments = [
@@ -49,7 +67,7 @@ module "management_groups" {
   }
 
   policy_assignments_to_modify = {
-    "amg-alz" = {
+    "alz" = {
       "policy_assignments" = {
         "Deploy-MDFC-Config-H224" = {
           "parameters" = {
@@ -72,21 +90,21 @@ module "management_groups" {
         }
       }
     }
-    "amg-connectivity" = {
+    "connectivity" = {
       "policy_assignments" = {
         "Enable-DDoS-VNET" = {
           "enforcement_mode" = "DoNotEnforce"
         }
       }
     }
-    "amg-corp" = {
+    "corp" = {
       "policy_assignments" = {
         "Deploy-Private-DNS-Zones" = {
           "enforcement_mode" = "DoNotEnforce"
         }
       }
     }
-    "amg-landingzones" = {
+    "landingzones" = {
       "policy_assignments" = {
         "Enable-DDoS-VNET" = {
           "enforcement_mode" = "DoNotEnforce"
@@ -117,5 +135,9 @@ module "management_groups" {
       "management_group_name" = "management"
       "subscription_id"       = var.subscription_ids["management"]
     }
+    # "security" = {
+    #   "management_group_name" = "security"
+    #   "subscription_id"       = var.subscription_ids["security"]
+    # }
   }
 }
