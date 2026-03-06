@@ -1,6 +1,6 @@
 locals {
   management_resource_group_name          = "rg-management-${var.location}"
-  management_resource_group_id            = "/subscriptions/${var.subscription_id_management}/resourcegroups/${local.management_resource_group_name}"
+  management_resource_group_id            = "/subscriptions/${var.subscription_ids["management"]}/resourcegroups/${local.management_resource_group_name}"
   automation_account_name                 = "aa-management-${var.location}"
   log_analytics_workspace_name            = "law-management-${var.location}"
   ama_user_assigned_managed_identity_name = "uami-management-ama-${var.location}"
