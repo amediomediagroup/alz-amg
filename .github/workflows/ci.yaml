@@ -20,6 +20,7 @@ jobs:
       id-token: write
       contents: read
       pull-requests: write
+      security-events: write 
     with:
       root_module_folder_relative_path: '.'
       terraform_cli_version: ${{ inputs.terraform_cli_version }}
