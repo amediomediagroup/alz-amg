@@ -76,10 +76,10 @@ provider "azapi" {
 }
 
 provider "alz" {
-      library_references = [
-        {
-          path = "platform/alz"
-          ref  = "2026.01.2"
-        }
-      ]
+  library_references = [
+    {
+      path = "platform/alz"
+      ref  = "2026.01.2"
     }
+  ]
+}
