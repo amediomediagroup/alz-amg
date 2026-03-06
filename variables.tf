@@ -15,7 +15,7 @@ variable "subscription_ids" {
 
 variable "location" {
   type        = string
-  default     = "uksouth"
+  default     = "southeastasia"
   description = "Location for the resources"
 }
 
