@@ -74,3 +74,12 @@ provider "azurerm" {
 provider "azapi" {
   skip_provider_registration = true
 }
+
+provider "alz" {
+      library_references = [
+        {
+          path = "platform/alz"
+          ref  = "2026.01.2"
+        }
+      ]
+    }
